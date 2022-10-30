@@ -1,0 +1,45 @@
+version: "2.1"
+services:
+  nzbget:
+    image: lscr.io/linuxserver/nzbget:latest
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - NZBGET_USER=nzbget #optional
+      - NZBGET_PASS=tegbzn6789 #optional
+    volumes:
+      - /home/arbiter/media-management/nzbget/config:/config
+      - /home/arbiter/media-management/nzbget/downloads:/downloads #optional
+    ports:
+      - 6789:6789
+    restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/arbiter/media-management/sonarr/data:/config
+      - /home/arbiter/media-management/sonarr/tv:/tv #optional
+      - /home/arbiter/media-management/sonarr/downloads:/downloads #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/arbiter/media-management/radarr/data:/config
+      - /home/arbiter/media-management/radarr/movies:/movies #optional
+      - /home/arbiter/media-management/radarr/downloads:/downloads #optional
+    ports:
+      - 7878:7878
+    restart: unless-stopped
