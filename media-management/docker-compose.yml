@@ -2,7 +2,6 @@ version: "3"
 services:
   gluetun:
     image: qmcgaw/gluetun
-
     container_name: gluetun
     # line above must be uncommented to allow external containers to connect. See https://github.com/qdm12/gluetun/wiki/Connect-a-container-to-gluetun#external-container-to-gluetun
     cap_add:
@@ -53,9 +52,30 @@ services:
     volumes:
       - /home/arbiter/media-management/nzbget/config:/config
       - /home/arbiter/media-management/nzbget/downloads:/downloads #optional
-
     restart: unless-stopped
     network_mode: "service:gluetun"
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=username #optional
+      - PASS=password #optional
+      #- WHITELIST=iplist #optional
+      #- PEERPORT=peerport #optional
+      #- HOST_WHITELIST=dnsname list #optional
+    volumes:
+      - /home/arbiter/media-management/transmission/config:/config
+      - /home/arbiter/media-management/transmission/downloads:/downloads
+      - /home/arbiter/media-management/transmission/watch:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
