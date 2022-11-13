@@ -13,6 +13,11 @@ services:
       - 8388:8388/tcp # Shadowsocks
       - 8388:8388/udp # Shadowsocks
       - 6789:6789 # nzbget
+      - 9091:9091 # transmission
+      - 51413:51413 # transmission
+      - 51413:51413/udp # transmission
+      - 8989:8989 # sonarr
+      - 7878:7878 # radarr
     volumes:
       - /home/arbiter/media-management/glutun:/gluetun
       - /home/arbiter/media-management/glutun/custom.conf:/gluetun/custom.conf:ro
@@ -71,11 +76,12 @@ services:
       - /home/arbiter/media-management/transmission/config:/config
       - /home/arbiter/media-management/transmission/downloads:/downloads
       - /home/arbiter/media-management/transmission/watch:/watch
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
+    #ports:
+    #  - 9091:9091
+    #  - 51413:51413
+    #  - 51413:51413/udp
     restart: unless-stopped
+    network_mode: "service:gluetun"
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -87,9 +93,10 @@ services:
       - /home/arbiter/media-management/sonarr/data:/config
       - /home/arbiter/media-management/sonarr/tv:/tv #optional
       - /home/arbiter/media-management/sonarr/downloads:/downloads #optional
-    ports:
-      - 8989:8989
+    #ports:
+    #  - 8989:8989
     restart: unless-stopped
+    network_mode: "service:gluetun"
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -101,6 +108,7 @@ services:
       - /home/arbiter/media-management/radarr/data:/config
       - /home/arbiter/media-management/radarr/movies:/movies #optional
       - /home/arbiter/media-management/radarr/downloads:/downloads #optional
-    ports:
-      - 7878:7878
+    #ports:
+    #  - 7878:7878
     restart: unless-stopped
+    network_mode: "service:gluetun"
