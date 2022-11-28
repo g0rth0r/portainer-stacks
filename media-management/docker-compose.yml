@@ -56,7 +56,7 @@ services:
       - NZBGET_PASS=$NZBGET_PASS #optional
     volumes:
       - ./nzbget/config:/config
-      - ./nzbget/downloads:/downloads #optional
+      - $NZBGET_BASE_DIR:/downloads #optional
     restart: unless-stopped
     network_mode: "service:gluetun"
   transmission:
