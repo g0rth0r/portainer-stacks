@@ -74,8 +74,8 @@ services:
       #- HOST_WHITELIST=dnsname list #optional
     volumes:
       - ./transmission/config:/config
-      - ./transmission/downloads:/downloads
-      - ./transmission/watch:/watch
+      - $TRANSMISSION_DOWNLOAD_DIR:/downloads
+      - $TRANSMISSION_WATCH_DIR:/watch
     #ports:
     #  - 9091:9091
     #  - 51413:51413
@@ -91,7 +91,7 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - ./sonarr/data:/config
-      - ./sonarr/tv:/tv #optional
+      - $SONARR_TVSHOW_DIR:/tv #optional
       #- /home/arbiter/media-management/sonarr/downloads:/downloads #optional
     #ports:
     #  - 8989:8989
@@ -106,7 +106,7 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - ./radarr/data:/config
-      - ./radarr/movies:/movies #optional
+      - $RADARR_MOVIE_DIR:/movies #optional
       #- /home/arbiter/media-management/radarr/downloads:/downloads #optional
     #ports:
     #  - 7878:7878

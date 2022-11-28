@@ -12,11 +12,12 @@ services:
     volumes:
       - ./plex/config:/config
       - ./plex/tv:/tv
-      #- $PLEX_ROOT_A/tv-shows:/tv_a
-      #- $PLEX_ROOT_B/tv-shows:/tv_b
-      - ./plex/movies:/movies
-      - ./plex/anime:/anime
-      - ./plex/music:/music
+      - $PLEX_ROOT_A/tv-shows:/tv_a
+      - $PLEX_ROOT_B/tv-shows:/tv_b
+      - $PLEX_ROOT_A/movies:/movies_a
+      - $PLEX_ROOT_B/movies:/movies_b
+      - $PLEX_ROOT_A/anime:/anime_a
+      - $PLEX_ROOT_B/anime:/anime_b
     devices:
       - "/dev/dri:/dev/dri"
     restart: unless-stopped
