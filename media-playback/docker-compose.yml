@@ -18,6 +18,22 @@ services:
       - $PLEX_ROOT_B/movies:/movies_b
       - $PLEX_ROOT_A/anime:/anime_a
       - $PLEX_ROOT_B/anime:/anime_b
+      - $PLEX_MUSIC:/music
+      - $YOUTUBE_LIKES:/youtube
     devices:
       - "/dev/dri:/dev/dri"
+    restart: unless-stopped
+  beets:
+    image: lscr.io/linuxserver/beets:latest
+    container_name: beets
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./beets/config>:/config
+      - $PLEX_MUSIC:/music
+      - $MUSIC_UNSORTED:/downloads
+    ports:
+      - 8337:8337
     restart: unless-stopped
