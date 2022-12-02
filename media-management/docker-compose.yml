@@ -95,7 +95,7 @@ services:
       - $MEDIA_BASE_DIR_B/tv-shows:/tv_b #optional
       - $MEDIA_BASE_DIR_A/anime:/anime_a #optional
       - $MEDIA_BASE_DIR_B/anime:/anime_b #optional
-      #- /home/arbiter/media-management/sonarr/downloads:/downloads #optional
+      - $NZBGET_BASE_DIR:/downloads #nzbget directory
     #ports:
     #  - 8989:8989
     restart: unless-stopped
