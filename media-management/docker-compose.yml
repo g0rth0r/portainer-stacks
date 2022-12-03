@@ -75,7 +75,6 @@ services:
     volumes:
       - ./transmission/config:/config
       - $TRANSMISSION_DOWNLOAD_DIR:/downloads
-      - $TRANSMISSION_WATCH_DIR:/watch
     #ports:
     #  - 9091:9091
     #  - 51413:51413
