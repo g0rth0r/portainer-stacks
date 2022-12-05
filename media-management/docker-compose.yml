@@ -110,7 +110,7 @@ services:
       - ./radarr/data:/config
       - $MEDIA_BASE_DIR_A/movies:/movies_a #optional
       - $MEDIA_BASE_DIR_B/movies:/movies_b
-      #- /home/arbiter/media-management/radarr/downloads:/downloads #optional
+      - $NZBGET_BASE_DIR:/downloads #nzbget directory
     #ports:
     #  - 7878:7878
     restart: unless-stopped
