@@ -66,7 +66,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin
-      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - TRANSMISSION_WEB_HOME=./transmission/config/ui/combustion-release #optional
       - USER=$TRANSMISSION_USER #optional
       - PASS=$TRANSMISSION_PASS #optional
       #- WHITELIST=iplist #optional
