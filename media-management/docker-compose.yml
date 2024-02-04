@@ -19,8 +19,8 @@ services:
       - 8989:8989 # sonarr
       - 7878:7878 # radarr
     volumes:
-      - ./gluetun:/gluetun
-      - ./gluetun/custom.conf:/gluetun/custom.conf:ro
+      - /data/media-management/gluetun:/gluetun
+      - /data/media-management/gluetun/custom.conf:/gluetun/custom.conf:ro
     environment:
       # See https://github.com/qdm12/gluetun/wiki
       - VPN_SERVICE_PROVIDER=custom
@@ -55,7 +55,7 @@ services:
       - NZBGET_USER=$NZBGET_USER #optional
       - NZBGET_PASS=$NZBGET_PASS #optional
     volumes:
-      - ./nzbget/config:/config
+      - /data/media-management/nzbget/config:/config
       - $NZBGET_BASE_DIR:/downloads #optional
     restart: unless-stopped
     network_mode: "service:gluetun"
@@ -73,7 +73,7 @@ services:
       #- PEERPORT=peerport #optional
       #- HOST_WHITELIST=dnsname list #optional
     volumes:
-      - ./transmission/config:/config
+      - /data/media-management/transmission/config:/config
       - $TRANSMISSION_DOWNLOAD_DIR:/downloads
     #ports:
     #  - 9091:9091
@@ -89,7 +89,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     volumes:
-      - ./sonarr/data:/config
+      - /data/media-management/sonarr/data:/config
       - $MEDIA_BASE_DIR_A/tv-shows:/tv_a #optional
       - $MEDIA_BASE_DIR_B/tv-shows:/tv_b #optional
       - $MEDIA_BASE_DIR_A/anime:/anime_a #optional
@@ -108,7 +108,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     volumes:
-      - ./radarr/data:/config
+      - /data/media-management/radarr/data:/config
       - $MEDIA_BASE_DIR_A/movies:/movies_a #optional
       - $MEDIA_BASE_DIR_B/movies:/movies_b
       - $NZBGET_BASE_DIR:/downloads #nzbget directory
