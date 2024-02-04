@@ -1,4 +1,6 @@
 version: '3'
+networks:
+ loki:
 services:
   influxdb:
     image: influxdb:latest
@@ -7,10 +9,11 @@ services:
       - 8086:8086
     volumes:
       - ./influxdb:/var/lib/influxdb
-    restart:
-      always
+    restart: unless-stopped
+    networks:
+      - loki
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:latest
     container_name: grafana
     user: "1000:0"
     ports:
@@ -18,7 +21,31 @@ services:
     volumes:
       #- ./grafana:/var/lib/grafana
       - grafana-storage:/var/lib/grafana
-    restart:
-      always
+    restart: unless-stopped
+    networks:
+      - loki
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    volumes:
+      - ./loki:/etc/loki
+    ports:
+      - 3100:3100
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki-config.yml
+    networks:
+      - loki
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - /var/log:/var/log
+      - ./promtail:/etc/promtail
+    # ports:
+    #   - "1514:1514" # this is only needed if you are going to send syslogs
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/promtail-config.yml
+    networks:
+      - loki
 volumes:
   grafana-storage:
