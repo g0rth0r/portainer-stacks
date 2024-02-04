@@ -10,8 +10,8 @@ services:
       - VERSION=docker
       - PLEX_CLAIM= #optional
     volumes:
-      - ./plex/config:/config
-      - ./plex/custom_scripts:/custom-cont-init.d:ro
+      - /data/media-playback/plex/config:/config
+      - /data/media-playback/plex/custom_scripts:/custom-cont-init.d:ro
       - $PLEX_ROOT_A/tv-shows:/tv_a
       - $PLEX_ROOT_B/tv-shows:/tv_b
       - $PLEX_ROOT_A/movies:/movies_a
@@ -30,9 +30,9 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=Europe/Berlin
     volumes:
-      - ./beets/config:/config
+      - /data/media-playback/beets/config:/config
       - $PLEX_MUSIC_A:/music
       - $PLEX_MUSIC_JCORE:/jcore
       - $MUSIC_UNSORTED:/downloads
@@ -47,7 +47,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - ./tautulli/config:/config
+      - /data/media-playback/tautulli/config:/config
     ports:
       - 8181:8181
     restart: unless-stopped
