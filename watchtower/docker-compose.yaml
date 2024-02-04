@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  gotify:
+    image: gotify/server
+    container_name: gotify
+    hostname: gotify
+    restart: unless-stopped
+    ports:
+      - 8282:80
+    environment:
+      - TZ=Europe/Berlin
+      - GOTIFY_DEFAULTUSER_PASS=admin
+      - GOTIFY_DEFAULTUSER_PASS=$GOTIFY_DEFAULTUSER_PASS
+    volumes:
+      - "./gotify_data:/app/data"
+
+  watchtower:
+    image: containrrr/watchtower
+    hostname: watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    depends_on:
+      - gotify
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=Europe/Berlin
+      - NO_COLOR=true
+      - WATCHTOWER_SCHEDULE=0 0 19 * * *
+      - WATCHTOWER_INCLUDE_STOPPED=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_MONITOR_ONLY=true
+      #- WATCHTOWER_NOTIFICATIONS=discord
+      - WATCHTOWER_NOTIFICATION_URL=discord://$DISCORD_TOKEN@$DISCORD_CHANNEL
+      #- WATCHTOWER_NOTIFICATION_GOTIFY_URL=http://gotify:80/
+      #- WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN=$WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN
+      #- WATCHTOWER_NOTIFICATION_GOTIFY_TLS_SKIP_VERIFY=true
