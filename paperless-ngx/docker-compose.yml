@@ -1,0 +1,31 @@
+version: "3.4"
+services:
+  broker:
+    container_name: broker
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+  paperless-ngx:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-ngx
+    environment:
+      - USERMAP_UID=1000
+      - USERMAP_GID=1000
+      - TZ=Europe/Berlin
+      - PAPERLESS_REDIS=redis://broker:6379
+      - PAPERLESS_DATA_DIR=/config
+      - PAPERLESS_MEDIA_ROOT=/data/media
+      - PAPERLESS_CONSUMPTION_DIR=/data/consume
+      - PAPERLESS_TIME_ZONE=Europe/Berlin
+    volumes:
+      - data/paperless-ngx/config:/config:/config
+      - $PAPERLESS_DIR:/data
+    ports:
+      - 8008:8000
+    restart: unless-stopped
+    depends_on:
+      - broker
+
+volumes:
+  redisdata:
