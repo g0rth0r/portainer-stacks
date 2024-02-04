@@ -11,14 +11,15 @@ services:
       - PLEX_CLAIM= #optional
     volumes:
       - ./plex/config:/config
-      - ./plex/tv:/tv
+      - ./plex/custom_scripts:/custom-cont-init.d:ro
       - $PLEX_ROOT_A/tv-shows:/tv_a
       - $PLEX_ROOT_B/tv-shows:/tv_b
       - $PLEX_ROOT_A/movies:/movies_a
       - $PLEX_ROOT_B/movies:/movies_b
       - $PLEX_ROOT_A/anime:/anime_a
       - $PLEX_ROOT_B/anime:/anime_b
-      - $PLEX_MUSIC:/music
+      - $PLEX_MUSIC_A:/music
+      - $PLEX_MUSIC_JCORE:/jcore
       - $YOUTUBE_LIKES:/youtube
     devices:
       - "/dev/dri:/dev/dri"
@@ -31,9 +32,22 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - ./beets/config>:/config
-      - $PLEX_MUSIC:/music
+      - ./beets/config:/config
+      - $PLEX_MUSIC_A:/music
+      - $PLEX_MUSIC_JCORE:/jcore
       - $MUSIC_UNSORTED:/downloads
     ports:
       - 8337:8337
+    restart: unless-stopped
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./tautulli/config:/config
+    ports:
+      - 8181:8181
     restart: unless-stopped
