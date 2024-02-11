@@ -19,7 +19,7 @@ services:
       - PAPERLESS_CONSUMPTION_DIR=/data/consume
       - PAPERLESS_TIME_ZONE=Europe/Berlin
     volumes:
-      - data/paperless-ngx/config:/config:/config
+      - /data/paperless-ngx/config:/config:/config
       - $PAPERLESS_DIR:/data
     ports:
       - 8008:8000
