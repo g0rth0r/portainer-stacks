@@ -22,7 +22,7 @@ services:
       #- /data/tgi-stack/grafana:/var/lib/grafana
       - grafana-storage:/var/lib/grafana
     restart: unless-stopped
-    environment:
+    #environment:
       #- GF_INSTALL_PLUGINS=https://github.com/grafana/grafana-infinity-datasource/releases/download/v2.7.1/yesoreyeram-infinity-datasource-2.7.1.darwin_amd64.zip;yesoreyeram-infinity-datasource
     networks:
       - loki
