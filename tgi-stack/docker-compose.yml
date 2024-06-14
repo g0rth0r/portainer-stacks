@@ -22,6 +22,8 @@ services:
       #- /data/tgi-stack/grafana:/var/lib/grafana
       - grafana-storage:/var/lib/grafana
     restart: unless-stopped
+    environment:
+      - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
     networks:
       - loki
   loki:
