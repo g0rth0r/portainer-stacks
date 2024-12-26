@@ -18,6 +18,7 @@ services:
       - 51413:51413/udp # transmission
       - 8989:8989 # sonarr
       - 7878:7878 # radarr
+      - 8083:8083 #calibre-web
     volumes:
       - /data/media-management/gluetun:/gluetun
       - /data/media-management/gluetun/custom.conf:/gluetun/custom.conf:ro
@@ -114,5 +115,22 @@ services:
       - $NZBGET_BASE_DIR:/downloads #nzbget directory
     #ports:
     #  - 7878:7878
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      #- DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - /data/media-management/calibre-web/data:/config
+      - $CALIBRE_BASE_DIR:/books
+    #ports:
+      #- 8083:8083
     restart: unless-stopped
     network_mode: "service:gluetun"
