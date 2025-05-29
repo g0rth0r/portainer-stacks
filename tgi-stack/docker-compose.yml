@@ -3,7 +3,7 @@ networks:
  loki:
 services:
   influxdb:
-    image: influxdb:latest
+    image: influxdb:2.7.5
     container_name: influxdb
     ports:
       - 8086:8086
