@@ -134,3 +134,16 @@ services:
       #- 8083:8083
     restart: unless-stopped
     network_mode: "service:gluetun"
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /data/overseerr/config:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
