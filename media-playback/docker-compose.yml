@@ -35,6 +35,7 @@ services:
     volumes:
       - /data/media-playback/beets/config:/config
       - $PLEX_MUSIC_A:/music
+      - $PLEX_MUSIC_M:/music_m
       - $PLEX_MUSIC_JCORE:/jcore
       - $MUSIC_UNSORTED:/downloads
     ports:
