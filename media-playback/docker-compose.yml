@@ -19,6 +19,7 @@ services:
       - $PLEX_ROOT_A/anime:/anime_a
       - $PLEX_ROOT_B/anime:/anime_b
       - $PLEX_MUSIC_A:/music
+      - $PLEX_MUSIC_M:/music_m
       - $PLEX_MUSIC_JCORE:/jcore
       - $YOUTUBE_LIKES:/youtube
     devices:
