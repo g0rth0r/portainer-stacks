@@ -8,8 +8,10 @@ services:
     ports:
       - "8086:8086"
     volumes:
+      - /data/tgi-stack/influxdb:/var/lib/influxdb
       - influxdb-data:/var/lib/influxdb2
       - influxdb-config:/etc/influxdb2
+      - /data/tgi-stack/tls/influxdb:/etc/influxdb2/tls:ro
     environment:
       INFLUXD_TLS_CERT: "/etc/influxdb2/tls/fullchain.pem"
       INFLUXD_TLS_KEY: "/etc/influxdb2/tls/privkey.pem"
