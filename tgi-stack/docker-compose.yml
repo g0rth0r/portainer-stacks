@@ -6,9 +6,10 @@ services:
     image: influxdb:2.7.5
     container_name: influxdb
     ports:
-      - 8086:8086
+      - "8086:8086"
     volumes:
-      - /data/tgi-stack/influxdb:/var/lib/influxdb
+      - influxdb-data:/var/lib/influxdb2
+      - influxdb-config:/etc/influxdb2
     restart: unless-stopped
     networks:
       - loki
@@ -56,3 +57,11 @@ services:
       - loki
 volumes:
   grafana-storage:
+
+  influxdb-data:
+    external: true
+    name: ef5434a956cdb0fc874408fc29cabe480bfc4c05ae6a952439f418661d95182d
+
+  influxdb-config:
+    external: true
+    name: 6b37d3cf1a0e219f3ff33d1c0bfe49fb9880d5d1336bbd62727d84dffc6fe84f
