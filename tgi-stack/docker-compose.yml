@@ -17,13 +17,18 @@ services:
     container_name: grafana
     user: "1000:0"
     ports:
-      - 3001:3000
+      - "3001:3000"
     volumes:
-      #- /data/tgi-stack/grafana:/var/lib/grafana
       - grafana-storage:/var/lib/grafana
+      - /data/tgi-stack/tls/grafana:/etc/grafana/tls:ro
+    environment:
+      GF_SERVER_PROTOCOL: "https"
+      GF_SERVER_DOMAIN: "${GRAFANA_HOSTNAME}"
+      GF_SERVER_ROOT_URL: "${GRAFANA_ROOT_URL}"
+      GF_SERVER_CERT_FILE: "/etc/grafana/tls/fullchain.pem"
+      GF_SERVER_CERT_KEY: "/etc/grafana/tls/privkey.pem"
+      GF_SERVER_CERTS_WATCH_INTERVAL: "5m"
     restart: unless-stopped
-    #environment:
-      #- GF_INSTALL_PLUGINS=https://github.com/grafana/grafana-infinity-datasource/releases/download/v2.7.1/yesoreyeram-infinity-datasource-2.7.1.darwin_amd64.zip;yesoreyeram-infinity-datasource
     networks:
       - loki
   loki:
