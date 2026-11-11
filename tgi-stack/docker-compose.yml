@@ -10,6 +10,9 @@ services:
     volumes:
       - influxdb-data:/var/lib/influxdb2
       - influxdb-config:/etc/influxdb2
+    environment:
+      INFLUXD_TLS_CERT: "/etc/influxdb2/tls/fullchain.pem"
+      INFLUXD_TLS_KEY: "/etc/influxdb2/tls/privkey.pem"
     restart: unless-stopped
     networks:
       - loki
