@@ -11,10 +11,10 @@ services:
       - /data/tgi-stack/influxdb:/var/lib/influxdb
       - influxdb-data:/var/lib/influxdb2
       - influxdb-config:/etc/influxdb2
-      - /data/tgi-stack/tls/influxdb:/etc/influxdb2/tls:ro
+      - /data/tgi-stack/tls/influxdb:/tls:ro
     environment:
-      INFLUXD_TLS_CERT: "/etc/influxdb2/tls/fullchain.pem"
-      INFLUXD_TLS_KEY: "/etc/influxdb2/tls/privkey.pem"
+      INFLUXD_TLS_CERT: "/tls/fullchain.pem"
+      INFLUXD_TLS_KEY: "/tls/privkey.pem"
     restart: unless-stopped
     networks:
       - loki
